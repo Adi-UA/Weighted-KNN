@@ -1,6 +1,6 @@
 # Weighted-KNN
 
-This was my attemmpt at writing the K-Nearest Neighbors algorithm, and I decided to make a few modifications along the way to see how much of a difference it would make. Specifically, after I implemented the basic K-NN algorithm, I augmented it to accept weights from the user for each feature in a vector and for how the neartest neighbors affected the final output.
+This was my attempt at writing the K-Nearest Neighbors algorithm, and I decided to make a few modifications along the way to see how much of a difference it would make. Specifically, after I implemented the basic K-NN algorithm, I augmented it to accept weights from the user for each feature in a vector and for how the neartest neighbors affected the final output.
 
 ## The Model
 
