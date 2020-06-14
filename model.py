@@ -16,17 +16,17 @@ def weighted_euclidean_distance(vec1, vec2, weights):
         float: The calculated euclidean distance. It will always be greater than 0.
     """
     distance = 0.0
-    
+
     for i in range(len(vec1) - 1):
         weight = weights[i]
         contribution = weight * abs(vec2[i] - vec1[i])
 
         distance += contribution
-    
+
     return sqrt(distance)
 
 
-def find_k_nearest(train, test, k, weights = None):
+def find_k_nearest(train, test, k, weights=None):
     """
     Given a dataset of train vectors to check against, this function finds the k nearest samples and returns them.
 
@@ -42,15 +42,15 @@ def find_k_nearest(train, test, k, weights = None):
     candidates = []
 
     if weights is None:
-        weights = [1]*len(test)
+        weights = [1] * len(test)
 
     for vec in train:
-        if k<=0:
+        if k <= 0:
             break
-        distance = weighted_euclidean_distance(test,vec,weights)
+        distance = weighted_euclidean_distance(test, vec, weights)
         result = (vec[-1], distance)
         candidates.append(result)
-    
+
     candidates.sort(key=lambda item: item[1])
     return candidates[:k]
 
@@ -72,22 +72,25 @@ def find_category_scores(candidates, count_weight, distance_weight):
 
     for candidate in candidates:
         category = candidate[0]
-        distance = -candidate[1]  # negative because larger distaces lower scores
+        # negative because larger distaces lower scores
+        distance = -candidate[1]
 
         if category not in category_count:
             category_count[category] = 1
             category_scores[category] = distance_weight * distance
         else:
             category_count[category] = category_count[category] + 1
-            category_scores[category] = category_scores[category] + (distance_weight * distance)
-    
+            category_scores[category] = category_scores[category] + \
+                (distance_weight * distance)
+
     for category in category_scores:
-        category_scores[category] = category_scores[category] + (count_weight * category_count[category])
-    
+        category_scores[category] = category_scores[category] + \
+            (count_weight * category_count[category])
+
     return category_scores
 
 
-def classify(candidates, count_weight = 1, distance_weight = 1):
+def classify(candidates, count_weight=1, distance_weight=1):
     """
     This function uses the calculated scores to classify the test input by choosing the maximum score to be the "winner".
 
@@ -99,7 +102,8 @@ def classify(candidates, count_weight = 1, distance_weight = 1):
     Returns:
         The final category as determined by the algorithm.
     """
-    category_scores = find_category_scores(candidates, count_weight, distance_weight)
+    category_scores = find_category_scores(
+        candidates, count_weight, distance_weight)
     max_score = max(category_scores.values())
 
     final_category = None
@@ -107,5 +111,5 @@ def classify(candidates, count_weight = 1, distance_weight = 1):
         if max_score == category_scores[category]:
             final_category = category
             break
-    
+
     return final_category

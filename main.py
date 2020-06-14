@@ -1,7 +1,14 @@
 from model import *
 from data_handlers import *
 
-def run_model(train_set, test_set, k, weights = None, count_weight = 1, distance_weight = 1):
+
+def run_model(
+        train_set,
+        test_set,
+        k,
+        weights=None,
+        count_weight=1,
+        distance_weight=1):
     """
     This function runs the KNN model based on the input parameters
 
@@ -36,21 +43,21 @@ def run_model(train_set, test_set, k, weights = None, count_weight = 1, distance
     total_preds = len(y_pred)
     for i in range(total_preds):
         if y_pred[i] == y[i]:
-            correct+=1
-    
-    accuracy = correct/total_preds*100
-    return y,y_pred,accuracy
+            correct += 1
 
+    accuracy = correct / total_preds * 100
+    return y, y_pred, accuracy
 
 
 # Read the data
 data_file = "data/winequality-white.csv"  # Looks inside the current directory
-df = pd.read_csv(data_file, sep = ';')
+df = pd.read_csv(data_file, sep=';')
 
 # Run Model
-wt = (0.4,0.3,0.3,0.5,0.2,0.3,0.4,0.6,0.3,0.2,0.7,1)
-train, test = random_train_test_split(df, 0.75, 3) 
-y,y_pred,accuracy = run_model(train, test, 5, weights=wt, distance_weight=0.5)
+wt = (0.2, 0.7, 0.2, 0.5, 0.2, 0.3, 0.25, 0.3, 0.3, 0.6, 1, 1)
+train, test = random_train_test_split(df, 0.75, 3)
+y, y_pred, accuracy = run_model(
+    train, test, 3, weights=wt, distance_weight=0.5)
 
 # Print result
 print("Model Accuracy: " + str(accuracy) + " %")

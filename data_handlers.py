@@ -4,7 +4,7 @@ import pathlib
 
 def read_CSV(filename):
     """
-    This function reads a CSV with the given filename. 
+    This function reads a CSV with the given filename.
 
     Args:
         filename (str): The filename must contain the path to the file assuming this repository is the parent. So a file in the data folder inside the directory where this python file is located would simply need to be sent as "data/filename.extension"
@@ -14,7 +14,7 @@ def read_CSV(filename):
     """
 
     filepath = str(pathlib.Path(__file__).parent.absolute()) + "/" + filename
-    data = pd.read_csv(filepath)   
+    data = pd.read_csv(filepath)
     return data
 
 
@@ -33,7 +33,7 @@ def to_vector(df):
     return vector_list
 
 
-def random_train_test_split(df, train_frac, random_seed = None):
+def random_train_test_split(df, train_frac, random_seed=None):
     """
     This function randomizes the dta based on the seed and then splits the dataframe into train and test sets which are changed to their list of vector representations.
 
@@ -45,13 +45,13 @@ def random_train_test_split(df, train_frac, random_seed = None):
     Returns:
         tuple: The list of lists representing the vectors in the train and test data frame respectively,
     """
-    
+
     if random_seed is not None:
-        df = df.sample(frac=1, random_state = random_seed)
+        df = df.sample(frac=1, random_state=random_seed)
     else:
         df = df.sample(frac=1)
 
-    split_point = int(len(df.index)*train_frac)
+    split_point = int(len(df.index) * train_frac)
     train = to_vector(df[:split_point])
     test = to_vector(df[split_point:])
-    return train,test
+    return train, test
