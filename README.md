@@ -23,8 +23,8 @@ These weights can be negative, but it's completely useless to do so because the 
 
 The absolute distance is not the same as the euclidean distance used in standard K-NN. The formula doesn't square differences because weights can be added manually.
 
-In sumary, the standard formula for two vectors x and y is: **sqrt(( abs(y[i] - x[i])^2))**, and
-
+In sumary, the standard formula for two vectors x and y is: **sqrt( sum( (y[i] - x[i])^2))**, and
+ 
 the modified formula is: **sqrt(sum( abs(y[i] - x[i]) * weight[i] ))**
 
 When he distances have been calculated for all values in the train set, the K nearest neighbors are chosen and are stored in a list of tuples as (category, distance)
