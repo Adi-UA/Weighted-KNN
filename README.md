@@ -49,6 +49,22 @@ I have added another facet to this algorithm in the form of count_weight and dis
 
 ## Using
 
+### Before Running (Assuming you have pip and git)
+
+* If you're not worried about breaking anything in your environment:
+    
+    * Run `pip install -r requirements.txt`
+
+* Otherwise, if you're trying to install the dependencies individually:
+    * Run `pip install numpy`
+    * Run `pip install pandas`
+    
+Then, clone the repo with: `https://github.com/Adi-UA/Weighted-KNN.git`.
+
+**Note:** I used `python 3.7.4`,`numpy 1.19.0`, and `pandas 1.0.5`.
+
+### Running
+
 How do you use the model? Refer to the file `main.py` where I've set up a simple example on the [white wine dataset](https://archive.ics.uci.edu/ml/datasets/wine+quality).
 
 It should be reasonably easy to figure out what has to be done from looking at the file, but basically, once the input has been formatted into a list of lists representing a list of vectors either using your own functions or using the ones I
