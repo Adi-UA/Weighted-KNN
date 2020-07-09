@@ -59,7 +59,7 @@ I have added another facet to this algorithm in the form of count_weight and dis
     * Run `pip install numpy`
     * Run `pip install pandas`
     
-Then, clone the repo with: `https://github.com/Adi-UA/Weighted-KNN.git`.
+Then, clone the repo with: `git clone https://github.com/Adi-UA/Weighted-KNN.git`.
 
 **Note:** I used `python 3.7.x`,`numpy 1.19.0`, and `pandas 1.0.5`.
 
