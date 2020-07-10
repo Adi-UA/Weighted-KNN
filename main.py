@@ -1,14 +1,14 @@
-from model import *
 from data_handlers import *
+import numpy as np
+import wknn
 
 
-def run_model(
-        train_set,
-        test_set,
-        k,
-        weights=None,
-        count_weight=1,
-        distance_weight=1):
+def run_model(train_set,
+              test_set,
+              k,
+              weights=None,
+              count_weight=1,
+              distance_weight=1):
     """
     This function runs the KNN model based on the input parameters
 
@@ -24,29 +24,33 @@ def run_model(
         tuple: Returns a list of known output, predicted output and model accuracy on the test input.
     """
 
-    y = []
-    y_pred = []
+    length = len(test_set)
+    y = np.zeros((length))
+    y_pred = np.zeros((length))
+
+    if weights is None:
+        weights = np.ones((length))  # Default all weights to 1
+    weights_str = ' '.join(map(str, weights))
+
+    train_set_str = ' '.join(map(str, train_set[0]))
+    for i in range(1, len(train_set)):
+        train_set_str += ("|" + ' '.join(map(str, train_set[i]))
+                          )  # Create formatted string representing test set
 
     # Run on Test Data
-    for test in test_set:
-        if weights is not None:
-            candidates = find_k_nearest(train, test, k, weights)
-        else:
-            candidates = find_k_nearest(train, test, k)
+    for i, test in enumerate(test_set):
+        test_str = ' '.join(map(str, test))
+        final_class = wknn.classify(train_set_str, test_str, weights_str, k,
+                                    count_weight, distance_weight)
 
-        final_class = classify(candidates, count_weight, distance_weight)
-        y.append(test[-1])
-        y_pred.append(final_class)
+        y[i] = test[-1]
+        y_pred[i] = final_class
 
     # Find Accuracy on Test Data
-    correct = 0
-    total_preds = len(y_pred)
-    for i in range(total_preds):
-        if y_pred[i] == y[i]:
-            correct += 1
+    correct = np.sum(y == y_pred)
 
-    accuracy = correct / total_preds * 100
-    return y, y_pred, accuracy
+    accuracy = correct / length * 100
+    return accuracy
 
 
 # Read the data
@@ -54,10 +58,10 @@ data_file = "data/winequality-white.csv"  # Looks inside the current directory
 df = pd.read_csv(data_file, sep=';')
 
 # Run Model
-wt = (0.2, 0.7, 0.2, 0.5, 0.2, 0.3, 0.25, 0.3, 0.3, 0.6, 1, 1)
+wt = (0.2, 0.7, 0.2, 0.5, 0.2, 0.3, 0.25, 0.3, 0.3, 0.5, 1, 1)
 train, test = random_train_test_split(df, 0.75, 3)
-y, y_pred, accuracy = run_model(
-    train, test, 3, weights=wt, distance_weight=0.5)
+
+accuracy = run_model(train, test, 3, weights=wt, distance_weight=0.5)
 
 # Print result
 print("Model Accuracy: " + str(accuracy) + " %")

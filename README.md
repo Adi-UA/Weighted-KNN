@@ -12,7 +12,7 @@ For those of you unfamiliar with how the KNN algorithm works, it can at a high l
 * Sort the results to find K entries in the train set that have the least distance from the test data.
 * Use the known output values of those K results to predict which category the input data belongs to.
 
-Look [here](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm) for a more in-depth but easy-to-understand of KNN.
+Look [here](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm) for a more in-depth but easy-to-understand description of KNN.
 
 ### Specifics (assuming you know the basics)
 
@@ -23,7 +23,7 @@ These weights can be negative, but it's completely useless to do so because the 
 
 The absolute distance is not the same as the euclidean distance used in standard K-NN. The formula doesn't square differences because weights can be added manually.
 
-In sumary, the standard formula for two vectors x and y is: **sqrt( sum( (y[i] - x[i])^2))**, and
+In summary, the standard formula for two vectors x and y is: **sqrt( sum( (y[i] - x[i])^2))**, and
  
 the modified formula is: **sqrt(sum( abs(y[i] - x[i]) * weight[i] ))**
 
@@ -60,6 +60,10 @@ I have added another facet to this algorithm in the form of count_weight and dis
     * Run `pip install pandas`
     
 Then, clone the repo with: `git clone https://github.com/Adi-UA/Weighted-KNN.git`.
+Now, navigate to the repo folder in your terminal, then:
+* On MacOS/Linux: 
+    * Run `python setup.py build`
+    * Copy the file from inside the `build/lib*` directory into the root directory. The exact foldername may vary based on your system.
 
 **Note:** I used `python 3.7.x`,`numpy 1.19.0`, and `pandas 1.0.5`.
 
@@ -68,22 +72,20 @@ Then, clone the repo with: `git clone https://github.com/Adi-UA/Weighted-KNN.git
 How do you use the model? Refer to the file `main.py` where I've set up a simple example on the [white wine dataset](https://archive.ics.uci.edu/ml/datasets/wine+quality).
 
 It should be reasonably easy to figure out what has to be done from looking at the file, but basically, once the input has been formatted into a list of lists representing a list of vectors either using your own functions or using the ones I
-povided in `data_handlers.py` you should simply be able to pass in the train and test data to the `run_model` function. You will of course also need to specify a K value but everthing else is optional. If you don't give any weights it will simply run like a normal K-NN (all weights default to 1).
+provided in `data_handlers.py` you should simply be able to pass in the train and test data to the `run_model` function. You will of course also need to specify a K value but everthing else is optional. If you don't give any weights it will simply run like a normal K-NN (all weights default to 1).
 
 ## Sample Results (Rounded):
 K = 3 for all the following results with a 75-25 train-test split.
 
-* [White Wines](https://archive.ics.uci.edu/ml/datasets/wine+quality): Standard K-NN --> 55% accuracy (seed = 3)
-  * With only feature weights = (0.2, 0.7, 0.2, 0.5, 0.2, 0.3, 0.25, 0.3, 0.3, 0.6, 1, 1) --> 55% accuracy (seed = 3)
-  * With only distance weight = 0.5 --> 56% accuracy (seed = 3)
-  * With both feature and distance weights --> 62% accuracy (seed = 3)
-
-* [Iris Dataset](https://archive.ics.uci.edu/ml/datasets/iris): Standard K-NN --> 97% (seed = 3)
-  * With distance weight 0.5 --> 97% (seed = 3)
+* [White Wines](https://archive.ics.uci.edu/ml/datasets/wine+quality): Standard K-NN --> 58% accuracy (seed = 3)
+  * With only feature weights = (0.2, 0.8, 0.2, 0.5, 1, 0.2, 0.1, 0, 1, 0.7, 1, 1) --> 62% accuracy (seed = 3)
+  * With only distance weight = 0.5 --> 58% accuracy (seed = 3)
+  * With both feature and distance weights --> 60% accuracy (seed = 3)
                 
-* [Pima Indians Diabetes Dataset](https://www.kaggle.com/uciml/pima-indians-diabetes-database): Standard K-NN --> 64% (seed = 3)
-  * With distance weight = 0 --> 69% (seed = 3)
-  * With distance weight = 0 --> 71% (seed = 5)
+* [Pima Indians Diabetes Dataset](https://www.kaggle.com/uciml/pima-indians-diabetes-database): Standard K-NN --> 72% (seed = 3)
+  * With distance weight = 0 --> 61% (seed = 3)
+  * With distance weight = 0 --> 64% (seed = 5)
+  
 * [Banknote Authentication Dataset](https://archive.ics.uci.edu/ml/datasets/banknote+authentication): Standard KNN --> 100% (seed = 3)
 
 Within the repo these datasets can be found under `data/`
